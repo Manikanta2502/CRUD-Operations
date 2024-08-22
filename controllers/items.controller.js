@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Items = require('../Models/Items_sch');
+const { validationResult } = require('express-validator');
 
 const getItems = async(req,res,next)=>{
     try {
@@ -23,6 +24,10 @@ const getItem = async(req,res,next) => {
 }
 
 const postItem = async(req,res,next)=>{
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(422).json({message: errors.array()});
+    }
     try{      
     const item = await Items.create(req.body);
     res.status(200).json(item);
@@ -47,6 +52,10 @@ const delItem = async(req,res,next)=>{
 }
 
 const updateItem = async(req,res,next)=>{
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(422).json({errors: errors.array()});
+    }
     try{
         
         const {id} = req.params;

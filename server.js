@@ -1,7 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Items = require('./Models/Items_sch');
-const itemRoute = require('./routes/item.route')
+const itemRoute = require('./routes/item.route');
+const userRoute = require('./routes/user.route');
 
 
 const app = express();
@@ -11,6 +12,7 @@ app.use(express.urlencoded({extended: false}));
 
 
 app.use("/api/items",itemRoute);
+app.use("/api/user",userRoute)
 
 
 app.get('/',(req,res,next) => {
