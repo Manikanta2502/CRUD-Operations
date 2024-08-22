@@ -1,7 +1,17 @@
 const mongoose = require('mongoose');
-const User = require('../Models/users_sch');
+const Users = require('../Models/users_sch');
 const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
+
+const user_data = async(req,res,next)=>{
+    try {
+        const users = await Users.find({},"name _id items");
+        res.status(200).json({users});
+    }
+    catch(error){
+        res.status(500).json(error.message)
+    }
+}
 
 const register = async (req,res) =>{
     
@@ -9,7 +19,7 @@ const register = async (req,res) =>{
     if(!errors.isEmpty()){
         return res.status(422).json({message: errors.array()});
     }
-    const email_exist = await User.findOne({email: req.body.email})
+    const email_exist = await Users.findOne({email: req.body.email})
     if (email_exist){
         return res.status(400).json("The user already exist");
     }
@@ -18,7 +28,7 @@ const register = async (req,res) =>{
     const hashPassword = await bcrypt.hash(req.body.password,salt);
     console.log(hashPassword);
 
-    const user = new User({
+    const user = new Users({
         name: req.body.name,
         email: req.body.email,
         password: hashPassword
@@ -38,7 +48,7 @@ const login = async (req,res)=>{
     if(!errors.isEmpty()){
         return res.status(422).json({message: errors.array()});
     }
-    const user = await User.findOne({email: req.body.email});
+    const user = await Users.findOne({email: req.body.email});
     if(!user){
          return res.status(400).json("Email does not exist");
     }
@@ -53,5 +63,6 @@ const login = async (req,res)=>{
 
 }
 
+exports.user_data = user_data;
 exports.login = login;
 exports.register = register;

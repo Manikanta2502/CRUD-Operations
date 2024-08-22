@@ -17,6 +17,11 @@ const user_Schema = new mongoose.Schema({
         required: true,
         min: 6
      },
+     items : [
+      {
+         type: mongoose.Schema.Types.ObjectId,ref: 'Items'
+      }
+     ],
      date: {
         type: Date,
         default: Date.now

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {check} = require('express-validator');
-const {login,register} = require("../controllers/users.controller");
+const {login,register,user_data} = require("../controllers/users.controller");
 
 const validateItem = [
     // check('name').not().isEmpty()
@@ -17,9 +17,9 @@ const validateItem = [
         .withMessage("password must be a 6")
 ];
 
-router.get("/",(req,res,next) =>{
-    res.status(200).json("The route is working;")
-})
+
+
+router.get("/",user_data)
 
 router.post('/register',validateItem,register);
 

@@ -16,6 +16,9 @@ const items_schema = mongoose.Schema({
         origin: {
         type: String,
         required: false
+        },
+        user: {
+                type: mongoose.Schema.Types.ObjectId, ref:"Users",required: true
         }
     
 },

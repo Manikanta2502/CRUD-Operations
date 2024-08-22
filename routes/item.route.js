@@ -21,10 +21,10 @@ router.get('/',getItems);
 
 router.get('/:id',getItem);
 
-router.post('/',validateItem,postItem);
+router.post('/:user_id',validateItem,postItem);
 
-router.delete('/:id',delItem);
+router.delete('/:user_id/:item_id',delItem);
 
-router.put('/:id',validateItem,updateItem);
+router.put('/:user_id/:item_id',updateItem);
 
 module.exports = router;
