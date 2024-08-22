@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const Items = require('./Models/Items_sch');
 const itemRoute = require('./routes/item.route');
 const userRoute = require('./routes/user.route');
+require("dotenv").config();
 
 
 const app = express();
@@ -19,7 +20,7 @@ app.get('/',(req,res,next) => {
     res.send("The Port is working");
 })
 
-mongoose.connect("mongodb+srv://magulurimanikanta123:mi9ti1vQlHmJzzpo@cluster0.9i5xr.mongodb.net/CRUD-TEST?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect(process.env.DB_CONNECT)
 .then(() => {
     app.listen(3000,() => {
         console.log("Listening on port 3000");
